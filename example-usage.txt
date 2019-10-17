@@ -1,0 +1,87 @@
+<?php
+  class ValueChanged{
+      var $today;
+      private $firstValue='';
+      private $newValue='';
+      private $toggleValue1="";
+      private $toggleValue2="";
+
+      function __construct( ){
+          $this->today = date( 'Y-m-d' );
+      }
+
+      public function set_firstValue( $newFirstValue ){
+        $this->firstValue = $newFirstValue;
+      }
+
+      public function get_firstValue(){
+        return $this->firstValue;
+      }
+
+      public function set_toggleValue1( $tv1 ){
+        $this->toggleValue1 = $tv1;
+      }
+
+      public function set_toggleValue2( $tv2 ){
+        $this->toggleValue2 = $tv2;
+      }
+
+      public function set_newValue( $newNewValue ){
+        $this->newValue = $newNewValue;
+      }
+
+      public function get_newValue(){
+          return $this->newValue;
+      }
+
+      public function ToggleValues(){
+        $tempValue = $this->toggleValue1;
+        $this->toggleValue1 = $this->toggleValue2;
+        $this->toggleValue2 = $tempValue;
+        return $this->toggleValue2;
+      }
+
+      public function ValueDidChange(){
+        if ( $this->firstValue == $this->newValue ){
+              return false;
+        }
+        else{
+            $this->firstValue = $this->newValue;
+            return true;
+        } 
+      }
+  }
+
+
+$myObject = array(
+    '0' => 'Line 1',
+    '1' => 'Line 1',
+    '2' => 'Line 1',
+    '3' => 'Line 2',
+    '4' => 'Line 3',
+    '5' => 'Line 3',
+    '6' => 'Line 3',
+    '7' => 'Line 4',
+    '8' => 'Line 5',
+    '9' => 'Line 6',
+    '10' => 'Line 7',
+    '11' => 'Line 7',
+    '12' => 'Line 7',
+  );
+
+$myColor="#FF0000";
+$CV = new ValueChanged();
+$CV->set_toggleValue1("#0000FF");
+$CV->set_toggleValue2("#FF0000");
+$CV->set_firstValue($myObject[0]);
+
+foreach($myObject as $k=>$v){
+  $CV->set_newValue($v);
+  if($CV->ValueDidChange()){
+    $myColor = $CV->ToggleValues();
+  }
+  echo '<span style="color:'.$myColor.'">'.$v.'</span><br/>';
+}
+
+unset($CV);
+?>
