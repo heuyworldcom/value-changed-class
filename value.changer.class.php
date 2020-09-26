@@ -4,10 +4,14 @@
  **
  ** Author: Kevin J Brosnahan
  ** Date: October 15, 2019
+ ** Updated: June 12, 2020
  **
  ** Class ValueChanged
  ** Function: ValueDidChange() - Compares 2 values in a loop and detects when the values change.
  ** Returns: True/False
+ **
+ ** Improvement: No need to set a starting value ($FirstValue). Start() executes on __construct()
+ **
  **
  ** Function: ToggleValues() - Returns alternating values. Can be used separately or in conjunction with ValueDidChange()
  ** Returns: 1 of 2 given values
@@ -19,11 +23,16 @@
       var $today;
       private $firstValue='';
       private $newValue='';
-      private $toggleValue1="";
-      private $toggleValue2="";
+      private $toggleValue1='';
+      private $toggleValue2='';
 
       function __construct( ){
-          $this->today = date( 'Y-m-d' );
+        $this->today = date( 'Y-m-d' );
+		      $this::Start();
+      }
+
+      public function Start(){
+        $this->firstValue = 'blah';
       }
 
       public function set_firstValue( $newFirstValue ){
@@ -38,9 +47,18 @@
         $this->toggleValue1 = $tv1;
       }
 
+      public function get_toggleValue1(){
+        return $this->toggleValue1;
+      }
+
       public function set_toggleValue2( $tv2 ){
         $this->toggleValue2 = $tv2;
       }
+
+      public function get_toggleValue2(){
+        return $this->toggleValue2;
+      }
+
 
       public function set_newValue( $newNewValue ){
         $this->newValue = $newNewValue;
